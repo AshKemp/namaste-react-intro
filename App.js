@@ -24,10 +24,15 @@ import ReactDOM from "react-dom/client";
  */
 const heading = React.createElement(
   "h1",
-  { id: "title" },
+  { id: "title", key: "h1" },
   "Namaste React from Ashwin for parcel"
 );
-const heading2 = React.createElement("h2", { id: "title2" }, "Namaste Again");
+
+const heading2 = React.createElement(
+  "h2",
+  { id: "title2", key: "h2" },
+  "Namaste Again"
+);
 const container = React.createElement("div", { id: "container" }, [
   heading,
   heading2,
