@@ -1,3 +1,4 @@
+import React from "react";
 import ReactDOM from "react-dom/client";
 
 /**
@@ -22,17 +23,17 @@ import ReactDOM from "react-dom/client";
  * Transitive dependencies
  */
 
-const Title = () => (
-  <h1 id="title" key={"h1"}>
-    Namaste React from Ashwin for parcel
+const title = (
+  <h1 id="title" key={"h2"}>
+    Food Villa
   </h1>
 );
 
 const HeaderComponent = () => {
   return (
     <div>
-      <Title />
-      <h1>Namaste React functional component</h1>
+      {title}
+      <h2>Namaste React Functional Component </h2>
       <h2>This is a h2 tag</h2>
     </div>
   );
