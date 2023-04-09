@@ -1,18 +1,39 @@
-import { useState } from "react";
-import { restaurantList } from "../constants";
+import { useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
+import Shimmer from "./Shimmer";
 
 const filterRestaurantData = (searchText, restaurants) => {
   return restaurants.filter((restaurant) =>
-    restaurant.data.name.includes(searchText)
+    restaurant?.data?.name?.toLowerCase()?.includes(searchText?.toLowerCase())
   );
 };
 
 const Body = () => {
   const [searchText, setSearchText] = useState("");
-  const [restaurants, setRestaurants] = useState(restaurantList);
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+  const [allRestaurants, setAllRestaurants] = useState([]);
 
-  return (
+  useEffect(() => {
+    getRestaurants();
+  }, []);
+
+  async function getRestaurants() {
+    const data = await fetch(
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=13.030335468886307&lng=80.26849642395973&page_type=DESKTOP_WEB_LISTING"
+    );
+    const json = await data.json();
+    setAllRestaurants(json?.data?.cards[2]?.data?.data?.cards);
+    setFilteredRestaurants(json?.data?.cards[2]?.data?.data?.cards);
+    console.log(json);
+  }
+
+  console.log("render");
+
+  if (!allRestaurants) return null;
+
+  return allRestaurants?.length === 0 ? (
+    <Shimmer />
+  ) : (
     <>
       <div className="search-container">
         <input
@@ -27,17 +48,22 @@ const Body = () => {
           onClick={() => {
             const filteredRestaurantData = filterRestaurantData(
               searchText,
-              restaurants
+              allRestaurants
             );
-            setRestaurants(filteredRestaurantData);
+            setFilteredRestaurants(filteredRestaurantData);
           }}
         >
           Search
         </button>
       </div>
       <div className="restaurant-list">
-        {restaurants.map((restaurant) => {
-          return <RestaurantCard {...restaurant.data} />;
+        {filteredRestaurants?.length === 0 && (
+          <h1>No restaurants match for your filter!</h1>
+        )}
+        {filteredRestaurants.map((restaurant) => {
+          return (
+            <RestaurantCard key={restaurant.data.id} {...restaurant.data} />
+          );
         })}
       </div>
     </>
