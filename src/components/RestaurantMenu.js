@@ -1,27 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { IMG_CDN_URL } from "../constants";
+import useRestaurant from "../hooks/useRestaurant";
 import Shimmer from "./Shimmer";
 const RestaurantMenu = () => {
   const params = useParams();
-  const [restaurant, setRestaurant] = useState(null);
 
   const { resId } = params;
   console.log("Id: ", resId);
 
-  useEffect(() => {
-    getRestaurantInfo();
-  }, []);
-
-  async function getRestaurantInfo() {
-    const data = await fetch(
-      "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=13.030335468886307&lng=80.26849642395973&restaurantId=" +
-        resId
-    );
-    const json = await data?.json();
-    console.log(json);
-    setRestaurant(json?.data);
-  }
+  const restaurant = useRestaurant(resId);
 
   return !restaurant ? (
     <Shimmer />
@@ -43,12 +31,8 @@ const RestaurantMenu = () => {
       </div>
       <div>
         <h1>Menu</h1>
-        {console.log(
-          restaurant?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]
-            ?.card?.card?.categories[0]?.itemCards
-        )}
         <ul>
-          {restaurant?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card?.categories[0]?.itemCards.map(
+          {restaurant?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card?.itemCards.map(
             (item) => {
               return (
                 <li key={item?.card?.info?.id}>{item?.card?.info?.name}</li>
