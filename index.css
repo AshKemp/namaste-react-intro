@@ -1,4 +1,13 @@
-.header {
+/*
+/ Normal Native CSS
+/ SCSS
+/ inline CSS
+/ Component Libraries -> Material UI,Base UI, Ant, Chakra
+/ Styled Components
+/ Tailwind CSS Framework
+*/
+
+/* .header {
   display: flex;
   justify-content: space-between;
   margin: 10px;
@@ -43,4 +52,8 @@
 
 .menu {
   display: flex;
-}
+} */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
