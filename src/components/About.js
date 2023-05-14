@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import ProfileFC from "./Profile";
 import Profile from "./ProfileClass";
 import React from "react";
+import UserContext from "../stores/UserContext";
 
 class About extends React.Component {
   constructor(props) {
@@ -18,6 +19,13 @@ class About extends React.Component {
     return (
       <div>
         <h1>About Us Page</h1>
+        <UserContext.Consumer>
+          {({ user }) => (
+            <h4 className="font-bold text-xl p-10">
+              {user.name} - {user.email}
+            </h4>
+          )}
+        </UserContext.Consumer>
         <p>
           This is the Namaste React Live Course Chapter 07 - Finding the path
         </p>

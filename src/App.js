@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -10,6 +10,7 @@ import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
 import Profile from "./components/Profile";
 import Shimmer from "./components/Shimmer";
+import UserContext from "./stores/UserContext";
 // import Instamart from "./components/Instamart";
 
 /**
@@ -69,12 +70,21 @@ const Instamart = lazy(() => import("./components/Instamart"));
 // Upon On Demand Loading -> upon render -> suspend loading
 
 const AppLayout = () => {
+  const [user, setUser] = useState({
+    name: "Ashwin Km",
+    email: "test@gmail.com",
+  });
   return (
-    <>
+    <UserContext.Provider
+      value={{
+        user: user,
+        setUser: setUser,
+      }}
+    >
       <Header></Header>
       <Outlet />
       <Footer></Footer>
-    </>
+    </UserContext.Provider>
   );
 };
 
