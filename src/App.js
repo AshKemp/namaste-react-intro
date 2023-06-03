@@ -10,7 +10,11 @@ import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
 import Profile from "./components/Profile";
 import Shimmer from "./components/Shimmer";
-import UserContext from "./stores/UserContext";
+import UserContext from "./context/UserContext";
+import { Provider } from "react-redux";
+import store from "./stores/store";
+import Cart from "./components/Cart";
+
 // import Instamart from "./components/Instamart";
 
 /**
@@ -75,16 +79,18 @@ const AppLayout = () => {
     email: "test@gmail.com",
   });
   return (
-    <UserContext.Provider
-      value={{
-        user: user,
-        setUser: setUser,
-      }}
-    >
-      <Header></Header>
-      <Outlet />
-      <Footer></Footer>
-    </UserContext.Provider>
+    <Provider store={store}>
+      <UserContext.Provider
+        value={{
+          user: user,
+          setUser: setUser,
+        }}
+      >
+        <Header></Header>
+        <Outlet />
+        <Footer></Footer>
+      </UserContext.Provider>
+    </Provider>
   );
 };
 
@@ -121,6 +127,14 @@ const appRouter = createBrowserRouter([
         element: (
           <Suspense fallback={<Shimmer />}>
             <Instamart />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/cart",
+        element: (
+          <Suspense fallback={<Shimmer />}>
+            <Cart />
           </Suspense>
         ),
       },

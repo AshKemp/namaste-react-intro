@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { IMG_CDN_URL } from "../constants";
-import UserContext from "../stores/UserContext";
+import UserContext from "../context/UserContext";
 
 const RestaurantCard = ({
   name,

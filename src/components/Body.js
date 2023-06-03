@@ -4,7 +4,7 @@ import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { filterRestaurantData } from "../utils/helper";
 import useOnline from "../hooks/useOnline";
-import UserContext from "../stores/UserContext";
+import UserContext from "../context/UserContext";
 
 const Body = () => {
   const [searchText, setSearchText] = useState("");

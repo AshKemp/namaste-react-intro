@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import ProfileFC from "./Profile";
 import Profile from "./ProfileClass";
 import React from "react";
-import UserContext from "../stores/UserContext";
+import UserContext from "../context/UserContext";
 
 class About extends React.Component {
   constructor(props) {
